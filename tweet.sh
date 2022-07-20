@@ -160,6 +160,8 @@ function _capture_dated_website_screenshots_collection() {
         element_selector='.list__item:nth-child('"${i}"')'
         output="${media_filepath_prefix}${i}.png"
 
+        printf '%s.%s' 'About to save website screenshot to '"${output}" $'\n' 2>&1
+
         _capture_dated_website_screenshot "${output}" "${element_selector}" "${awaited_element_selector}" "${date}"
 
     done
