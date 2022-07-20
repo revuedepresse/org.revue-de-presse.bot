@@ -290,6 +290,8 @@ alias text='_text'
 # post-tweet "$(date -I)"
 #```
 function tweet() {
+    source "${HOME}/.asdf/asdf.sh"
+
     if ! command -v twurl >>/dev/null 2>&1; then
 
         printf '%s.%s' 'twurl is required' $'\n' 1>&2
@@ -318,8 +320,6 @@ function tweet() {
     local tweet_id
     local previous_tweet_id
     local response
-
-    source "${HOME}/.asdf/asdf.sh"
 
     local localized_date
     localized_date="$(date -d"${date}" '+%d/%m/%Y')"
