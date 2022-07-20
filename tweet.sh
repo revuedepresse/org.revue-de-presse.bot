@@ -183,7 +183,24 @@ function _capture_dated_website_screenshots_since() {
     while [ "$since_date" != "$(date -I)" ]; do
 
         echo DATE="${since_date}" make capture-dated-website-screenshots-collection
-        DATE="${since_date}" make capture-dated-website-screenshots-collection
+
+        for _ in $(seq 1 3);
+        do
+
+            DATE="${since_date}" make capture-dated-website-screenshots-collection
+
+            if [ $? -eq 0 ];
+            then
+
+                break
+
+            else
+
+                printf 'Retrying to capture date website screenshot (on the %s).%s' "${since_date}" $'\n' 1>&2
+
+            fi
+
+        done
 
         since_date=$(date -I -d "$since_date + 1 day")
 
