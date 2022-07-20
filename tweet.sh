@@ -1,8 +1,7 @@
 #!/bin/bash
 
 function install_package_manager_asdf() {
-    if [ -d "${HOME}/.asdf" ];
-    then
+    if [ -d "${HOME}/.asdf" ]; then
 
         # shellcheck disable=SC2016
         printf '%s.%s' 'Skipping package manager ("asdf") installation ("${HOME}/.asdf" exists already).' $'\n' 1>&2
@@ -60,8 +59,7 @@ function install_website_screenshot_capture_cli() {
 alias install-website-screenshot-capture-cli='install_website_screenshot_capture_cli'
 
 function install_web_browser() {
-    if command -v google-chrome >> /dev/null 2>&1;
-    then
+    if command -v google-chrome >>/dev/null 2>&1; then
 
         printf 'Skipping web browser ("%s") installation (Found "%s" command).%s' 'chrome' 'google-chrome' $'\n' 1>&2
 
@@ -173,8 +171,7 @@ function _capture_dated_website_screenshots_since() {
     local since_date
     since_date="${1}"
 
-    if [ -z "${since_date}" ];
-    then
+    if [ -z "${since_date}" ]; then
 
         since_date="$(date -I)"
 
@@ -184,13 +181,11 @@ function _capture_dated_website_screenshots_since() {
 
         echo DATE="${since_date}" make capture-dated-website-screenshots-collection
 
-        for _ in $(seq 1 3);
-        do
+        for _ in $(seq 1 3); do
 
             DATE="${since_date}" make capture-dated-website-screenshots-collection
 
-            if [ $? -eq 0 ];
-            then
+            if [ $? -eq 0 ]; then
 
                 break
 
