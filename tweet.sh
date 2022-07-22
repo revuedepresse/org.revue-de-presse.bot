@@ -15,6 +15,8 @@ function install_package_manager_asdf() {
 alias install-package-manager='install_package_manager_asdf'
 
 function install_ruby_runtime() {
+    source "${HOME}/.asdf/asdf.sh"
+
     asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git
     asdf install ruby 2.6.4
     asdf local ruby 2.6.4
@@ -23,6 +25,8 @@ function install_ruby_runtime() {
 alias install-ruby-runtime='install_ruby_runtime'
 
 function install_javascript_runtime_nodejs() {
+    source "${HOME}/.asdf/asdf.sh"
+
     asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
     asdf install nodejs 16.15.1
     asdf local nodejs 16.15.1
@@ -31,6 +35,8 @@ function install_javascript_runtime_nodejs() {
 alias install-javascript-runtime='install_javascript_runtime_nodejs'
 
 function install_twitter_client_twurl() {
+    source "${HOME}/.asdf/asdf.sh"
+
     if ! command -v gem >>/dev/null 2>&1; then
 
         printf '%s.%s' 'ruby (and gem) are required' $'\n' 1>&2
@@ -45,6 +51,8 @@ function install_twitter_client_twurl() {
 alias install-twitter-client='install_twitter_client_twurl'
 
 function install_website_screenshot_capture_cli() {
+    source "${HOME}/.asdf/asdf.sh"
+
     if ! command -v npm >>/dev/null 2>&1; then
 
         printf '%s.%s' 'nodejs (and npm) are required' $'\n' 1>&2
