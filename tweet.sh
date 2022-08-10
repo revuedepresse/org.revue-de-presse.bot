@@ -353,6 +353,18 @@ function tweet() {
             --delay=20 \
             --emulate-device="${device}" \
             --full-page \
+            --output="/tmp/${i}.png" \
+            --overwrite \
+            --scale-factor=1 \
+            --element='.list__item:nth-child('"${i}"')' \
+            --wait-for-element='.list__item:nth-child('${i}')' \
+            --no-block-ads
+
+        capture-website \
+            'https://revue-de-presse.org/'"${date}"/'?naked' \
+            --delay=20 \
+            --emulate-device="${device}" \
+            --full-page \
             --output="${media_filepath_prefix}${i}.png" \
             --overwrite \
             --scale-factor=1 \
