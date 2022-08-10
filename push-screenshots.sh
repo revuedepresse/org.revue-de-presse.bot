@@ -38,6 +38,7 @@ function push_screenshots() {
 
             echo mkdir --parents screenshots/$directory
             echo mv "screenshots/"*"${since_date}"* screenshots/$directory
+            echo git add screenshots/$directory
             echo gci 'Added the three news most retweeted on the '"${since_date}"
             echo git push origin
 
@@ -45,6 +46,7 @@ function push_screenshots() {
 
             mkdir --parents screenshots/$directory
             mv "screenshots/"*"${since_date}"* screenshots/$directory
+            echo git add screenshots/$directory
             gci 'Added the three news most retweeted on the '"${since_date}"
             git push origin
 
