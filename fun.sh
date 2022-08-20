@@ -253,7 +253,7 @@ function validate_docker_compose_configuration() {
 # API_KEY=''
 # API_SECRET=''
 # ACCESS_TOKEN=''
-# ACCESS_SECRET=''
+# ACCESS_TOKEN_SECRET=''
 # SCREEN_NAME=''
 # write_configuration_to_disk [ --help ]
 # ```
@@ -286,7 +286,7 @@ function write_configuration_to_disk() {
                 echo '# Configure Twitter account header bot'                                                         1>&2
                 echo ''                                                                                               1>&2
                 echo '```'                                                                                            1>&2
-                echo "$ API_KEY='_' API_SECRET='_' ACCESS_TOKEN='_' ACCESS_SECRET='_' SCREEN_NAME='_' make configure" 1>&2
+                echo "$ API_KEY='_' API_SECRET='_' ACCESS_TOKEN='_' ACCESS_TOKEN_SECRET='_' SCREEN_NAME='_' make configure" 1>&2
                 echo '```'                                                                                            1>&2
                 echo ''                                                                                               1>&2
                 printf '%s'$'\n' '# Show this help menu by assigning a non-empty value to DEBUG environment variable' 1>&2
@@ -333,13 +333,13 @@ function write_configuration_to_disk() {
 
     fi
 
-    local _access_secret
-    _access_secret="${ACCESS_SECRET}"
+    local _access_token_secret
+    _access_token_secret="${ACCESS_TOKEN_SECRET}"
 
-    if [ -z "${_access_secret}" ] || [ "${_access_secret}" = '_' ];
+    if [ -z "${_access_token_secret}" ] || [ "${_access_token_secret}" = '_' ];
     then
 
-        printf 'A %s is expected as a %s (%s).%s' 'non-empty string' 'an environment variable' 'ACCESS_SECRET' $'\n' 1>&2
+        printf 'A %s is expected as a %s (%s).%s' 'non-empty string' 'an environment variable' 'ACCESS_TOKEN_SECRET' $'\n' 1>&2
 
         return 1
 
@@ -371,7 +371,7 @@ function write_configuration_to_disk() {
         "API_KEY=${_api_key}" \
         "API_SECRET=${_api_secret}" \
         "ACCESS_TOKEN=${_access_token}" \
-        "ACCESS_SECRET=${_access_secret}" \
+        "ACCESS_TOKEN_SECRET=${_access_token_secret}" \
         "SCREEN_NAME=${_screen_name}" \
         > ./.env
 }

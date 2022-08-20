@@ -11,7 +11,7 @@ DEBUG ?= ''
 API_KEY ?= '_'
 API_SECRET ?= '_'
 ACCESS_TOKEN ?= '_'
-ACCESS_SECRET ?= '_'
+ACCESS_TOKEN_SECRET ?= '_'
 SCREEN_NAME ?= '_'
 
 COMPOSE_PROJECT_NAME ?= 'org_example_twitter-header-bot'
@@ -33,7 +33,7 @@ doc: ### Output the README documentation
 install: ### Install requirements
 	@/bin/bash -c "source fun.sh && install"
 
-configure: ### API_KEY= API_SECRET= ACCESS_TOKEN= ACCESS_SECRET= SCREEN_NAME= make configure
+configure: ### API_KEY= API_SECRET= ACCESS_TOKEN= ACCESS_TOKEN_SECRET= SCREEN_NAME= make configure
 	@/bin/bash -c "source fun.sh && configure"
 
 restart: clear-app-cache start ## Restart worker

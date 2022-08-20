@@ -9,7 +9,7 @@ Add a '.env' file and insert these lines
 API_KEY=''        # API access key
 API_SECRET=''     # API access secret
 ACCESS_TOKEN=''   # API access token
-ACCESS_SECRET=''  # API access token secret
+ACCESS_TOKEN_SECRET=''  # API access token secret
 SCREEN_NAME=''    # Twitter handle (without the @ character)
 ```
 
@@ -21,7 +21,7 @@ or run this command after replacing the underscore characters with
 API_KEY='_' \
 API_SECRET='_' \
 ACCESS_TOKEN='_' \
-ACCESS_SECRET='_' \
+ACCESS_TOKEN_SECRET='_' \
 SCREEN_NAME='_' \
 make configure
 ```
