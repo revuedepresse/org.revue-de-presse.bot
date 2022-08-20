@@ -3,5 +3,4 @@
 .pm2-installed
 docker-compose.override.yaml
 node_modules
-twitter-header*.png
 var*
