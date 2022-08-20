@@ -29,7 +29,7 @@ start() {
 
         ./../node_modules/.bin/pm2 \
             --instances 1 \
-            --log "./var/log/${WORKER}.json" \
+            --log "./../var/log/${WORKER}.json" \
             --log-type json \
             --max-memory-restart 268435456 \
             --no-daemon \
