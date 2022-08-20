@@ -110,10 +110,10 @@ function install_process_manager() {
     if [ $(grep -c 'ASDF_DIR=' "${HOME}/.bashrc") -eq 0 ];
     then
 
-        echo 'export ASDF_DIR='"${_asdf_dir}"        >> "${HOME}/.bashrc"
+        echo 'export ASDF_DIR='"${_asdf_dir}"       >> "${HOME}/.bashrc"
         echo '. ${ASDF_DIR}/asdf.sh'                >> "${HOME}/.bashrc"
         echo '. ${ASDF_DIR}/completions/asdf.bash'  >> "${HOME}/.bashrc"
-        echo 'nodejs 16.15.1'                       >> "${HOME}/.tool-versions"
+        echo 'nodejs 18.7.0'                        >> "${HOME}/.tool-versions"
 
         echo \cat "${HOME}/.bashrc"
         \cat "${HOME}/.bashrc"
@@ -123,8 +123,8 @@ function install_process_manager() {
         source "${ASDF_DIR}/asdf.sh"
 
         asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
-        asdf install nodejs 16.15.1
-        asdf global nodejs 16.15.1
+        asdf install nodejs 18.7.0
+        asdf global nodejs 18.7.0
 
         # [npm Config Setting](https://docs.npmjs.com/cli/v8/using-npm/config#cache)
         npm config set cache "${_asdf_dir}/../npm" --location=global
@@ -134,7 +134,11 @@ function install_process_manager() {
     fi
 
     # twitter header bot installation
-    ( cd public && npm install )
+    (
+      cd public \
+      && npm install \
+      && npm audit fix --force
+    )
 
     echo '' > ./.pm2-installed
 }

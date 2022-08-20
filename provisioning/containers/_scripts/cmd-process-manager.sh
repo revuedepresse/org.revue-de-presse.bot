@@ -20,7 +20,7 @@ start() {
         local asdf_dir
         asdf_dir="${project_dir}/var/home/asdf"
 
-        install_process_manager "${asdf_dir}"
+        install_process_manager "${asdf_dir}" || true
 
     fi
 
