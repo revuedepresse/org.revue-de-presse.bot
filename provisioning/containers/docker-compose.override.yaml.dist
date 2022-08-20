@@ -1,0 +1,17 @@
+
+x-shared: &shared-config
+  volumes:
+    - '../../:/var/www/org.example.worker'
+
+services:
+
+  process-manager:
+    <<: *shared-config
+
+  worker:
+    <<: *shared-config
+
+networks:
+  default:
+    # [Use a pre-existing network](https://docs.docker.com/compose/networking/#use-a-pre-existing-network)
+    name: # external-network-name
