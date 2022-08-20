@@ -27,7 +27,7 @@ start() {
     (
         cd public
 
-        ./node_modules/.bin/pm2 \
+        ./../node_modules/.bin/pm2 \
             --instances 1 \
             --log "./var/log/${WORKER}.json" \
             --log-type json \
