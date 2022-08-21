@@ -212,6 +212,35 @@ function reset_color() {
     echo -n $'\033'\[00m
 }
 
+function set_file_permissions() {
+    local temporary_directory
+    temporary_directory="${1}"
+
+    if [ -z "${temporary_directory}" ];
+    then
+        printf 'A %s is expected as %s (%s).%s' 'non-empty string' '1st argument' 'temporary directory file path' $'\n'
+
+        return 1;
+    fi
+
+    if [ ! -d "${temporary_directory}" ];
+    then
+        printf 'A %s is expected as %s (%s).%s' 'directory' '1st argument' 'temporary directory file path' $'\n'
+
+        return 1;
+    fi
+
+    docker compose \
+        -f ./provisioning/containers/docker-compose.yaml \
+        -f ./provisioning/containers/docker-compose.override.yaml \
+        run \
+        --rm \
+        --user root \
+        --volume "${temporary_directory}:/tmp/remove-me" \
+        worker \
+        /bin/bash -c 'chmod -R ug+w /tmp/remove-me'
+}
+
 function start() {
     local DEBUG
     local WORKER
