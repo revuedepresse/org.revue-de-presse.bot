@@ -198,7 +198,7 @@ async function upload_banner(files) {
         banner: base64,
       })
       .then(() => {
-        delete_files(["images/twitter-header-altered.png"]);
+        delete_files([{input: "images/twitter-header-altered.png"}]);
 
         console.log("Header upload and clean-up are done.");
       });
