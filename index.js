@@ -115,10 +115,10 @@ async function get_followers() {
     .forEach((follower, index, arr) => {
       process_image(
         follower.profile_image_url_https,
-        `${follower.id}.png`
+        `images/avatars/${follower.id}.png`
       ).then(() => {
         const follower_avatar = {
-          input: `${follower.id}.png`,
+          input: `images/avatars/${follower.id}.png`,
           top: parseInt(`${126 + 100 * index}`),
           left: 1315,
         };
@@ -196,8 +196,9 @@ async function upload_banner(files) {
         banner: base64,
       })
       .then(() => {
-        console.log("Upload to Twitter done");
-        delete_files(files);
+        delete_files(["images/twitter-header-altered.png"]);
+
+        console.log("Header upload and clean-up are done.");
       });
   } catch (error) {
     console.log(error);
