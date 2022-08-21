@@ -141,6 +141,14 @@ function install_process_manager() {
 }
 
 function install_process_manager_requirements() {
+    add_system_user_group
+    install_system_packages
+    install_dockerize
+    create_log_files_when_non_existing "${WORKER}"
+    set_permissions
+    clear_package_management_system_cache
+    remove_distributed_version_control_system_files_git "${WORKER}"
+}
 
 function install_system_packages() {
     apt-get update
@@ -159,15 +167,6 @@ function install_system_packages() {
         tini \
         unzip \
         wget
-}
-
-    add_system_user_group
-    install_system_packages
-    install_dockerize
-    create_log_files_when_non_existing "${WORKER}"
-    set_permissions
-    clear_package_management_system_cache
-    remove_distributed_version_control_system_files_git "${WORKER}"
 }
 
 function remove_distributed_version_control_system_files_git() {
