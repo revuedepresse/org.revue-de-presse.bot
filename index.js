@@ -113,6 +113,8 @@ async function get_followers() {
   const get_followers_img = new Promise((resolve, reject) => {
     followers.users
     .forEach((follower, index, arr) => {
+      console.log(`one of the three last followers: ${follower.screen_name.toLowerCase()}`);
+
       process_image(
         follower.profile_image_url_https,
         `images/avatars/${follower.id}.png`
