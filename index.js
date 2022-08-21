@@ -101,7 +101,9 @@ async function get_followers() {
 
 
 /*---------------UPDATE PROFIL PICTURE---------------------*/
-  const followers = await twitterClient.accountsAndUsers.followersList({
+  const followers = await twitterClient
+  .accountsAndUsers
+  .followersList({
     count: 3,
   });
 
@@ -109,65 +111,78 @@ async function get_followers() {
   let count = 0;
 
   const get_followers_img = new Promise((resolve, reject) => {
-    followers.users.forEach((follower, index, arr) => {
+    followers.users
+    .forEach((follower, index, arr) => {
       process_image(
         follower.profile_image_url_https,
-        `./images/avatars/${follower.id}.png`
+        `${follower.id}.png`
       ).then(() => {
         const follower_avatar = {
-          input: `./images/avatars/${follower.id}.png`,
-          top: parseInt(`${380 + 300 * index}`),
-          left: 3950,
+          input: `${follower.id}.png`,
+          top: parseInt(`${126 + 100 * index}`),
+          left: 1315,
         };
         image_data.push(follower_avatar);
         count++;
         if (count === arr.length) resolve();
+      }).catch((e) => {
+        console.error({"processing_avatar": e})
       });
     });
   });
 
-  get_followers_img.then(() => {
+  get_followers_img
+  .then(() => {
+    console.log({image_data})
     draw_image(image_data);
+  })
+  .catch((e) => {
+    console.error({"drawing_header": e})
   });
 }
 
 async function process_image(url, image_path) {
-  await axios({
-    url,
-    responseType: "arraybuffer",
-  }).then(
-    (response) =>
-      new Promise(async (resolve, reject) => {
-        const rounded_corners = new Buffer.from(
-          '<svg><rect x="0" y="0" width="250" height="250" rx="125" ry="125"/></svg>'
-        );
-        resolve(
-          sharp(response.data)
-            .resize(250, 250)
-            .composite([
-              {
-                input: rounded_corners,
-                blend: "dest-in",
-              },
-            ])
-            .png()
-            .toFile(image_path)
-        );
-      })
-  );
+  try {
+    await axios({
+      url,
+      responseType: "arraybuffer",
+    }).then(
+      (response) =>
+        new Promise(async (resolve, reject) => {
+          const rounded_corners = new Buffer.from(
+            '<svg><rect x="0" y="0" width="83" height="83" rx="125" ry="125"/></svg>'
+          );
+          resolve(
+            sharp(response.data)
+              .resize(83, 83)
+              .composite([
+                {
+                  input: rounded_corners,
+                  blend: "dest-in",
+                },
+              ])
+              .png()
+              .toFile(image_path)
+          );
+        })
+    );
+  } catch (e) {
+    console.error({"processing_image": e});
+  }
 }
+
 
 
 async function draw_image(image_data) {
   try {
 
-    await sharp("./images/twitter-header-template.png")
+    await sharp("images/twitter-header-template.png")
       .composite(image_data)
-      .toFile("./images/twitter-header-altered.png");
+      .toFile("images/twitter-header-altered.png");
 
     upload_banner(image_data);
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
