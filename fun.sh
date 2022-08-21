@@ -59,7 +59,6 @@ function clean() {
         return 0
     fi
 
-    remove_running_container_and_image_in_debug_mode 'app'
     remove_running_container_and_image_in_debug_mode 'worker'
 }
 
