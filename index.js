@@ -95,7 +95,7 @@ async function get_followers() {
       location,
     });
   } catch (err) {
-    console.error(err);
+    throw err;
   }
 
 
@@ -125,21 +125,16 @@ async function get_followers() {
         image_data.push(follower_avatar);
         count++;
         if (count === arr.length) resolve();
-      }).catch((e) => {
-        console.error({"processing_avatar": e})
-
-        reject(e)
-      });
+      }).catch(e => throw e);
     });
   });
 
   get_followers_img
   .then(() => {
-    console.log({image_data})
     draw_image(image_data);
   })
   .catch((e) => {
-    console.error({"drawing_header": e})
+    throw e
   });
 }
 
@@ -169,7 +164,7 @@ async function process_image(url, image_path) {
         })
     );
   } catch (e) {
-    console.error({"processing_image": e});
+    throw e;
   }
 }
 
@@ -184,7 +179,7 @@ async function draw_image(image_data) {
 
     upload_banner(image_data);
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 }
 
@@ -203,7 +198,7 @@ async function upload_banner(files) {
         console.log("Header upload and clean-up are done.");
       });
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 }
 
@@ -216,7 +211,7 @@ async function delete_files(files) {
       }
     });
   } catch (err) {
-    console.error(err);
+    throw err;
   }
 }
 
