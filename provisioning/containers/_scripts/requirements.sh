@@ -107,7 +107,7 @@ function install_process_manager() {
     git clone https://github.com/asdf-vm/asdf.git --branch v0.10.0 "${_asdf_dir}"
     echo
 
-    if [ $(grep -c 'ASDF_DIR=' "${HOME}/.bashrc") -eq 0 ];
+    if [ ! -e "${HOME}/.bashrc" ] || [ $(grep -c 'ASDF_DIR=' "${HOME}/.bashrc") -eq 0 ];
     then
 
         echo 'export ASDF_DIR='"${_asdf_dir}"       >> "${HOME}/.bashrc"
