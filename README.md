@@ -1,21 +1,12 @@
-# 🤖 Twitter Bot Header
+# Twitter Bot Header 🤖
 
-## Configuration
-
-Add a '.env' file and insert these lines
+## Documentation
 
 ```shell
-# \cat .env.dist # to print configuration a configuration file example
-API_KEY=''        # API access key
-API_SECRET=''     # API access secret
-ACCESS_TOKEN=''   # API access token
-ACCESS_TOKEN_SECRET=''  # API access token secret
-SCREEN_NAME=''    # Twitter handle (without the @ character)
+make help
 ```
 
-or run this command after replacing the underscore characters with
- - valid credentials,
- - and a Twitter handle
+## Configuration
 
 ```shell
 API_KEY='_' \
@@ -29,36 +20,30 @@ make configure
 To get the API keys, you need to [apply for a Twitter Developer account](https://developer.twitter.com/en/apply-for-access).  
 It's free and take ~5 minutes.
 
-Lastly, add a banner template file with this specific name : twitter-banner.png.
-(make sure your file is a png image and have a size of 1500x500px)
+Lastly, add a banner template file named `public/images/twitter-banner-template.png`.
 
-## Run the script
+The banner template file *should be* an image in PNG format.
 
-Install dependencies:
-```shell
-yarn
-```
-or
-```shell
-npm install
-```
+Besides, you'll have to resize it by following the [official sizing recommendations](https://help.twitter.com/en/managing-your-account/common-issues-when-uploading-profile-photo):
+- width: 1500px,
+- height: 500px
 
-Start the app:
+i.e. 1500x500 in px
+
+## Installation
 
 ```shell
-node index.js
+WORKER="org.revue-de-presse.twitter-header-bot"
+COMPOSE_PROJECT_NAME="$(echo "${WORKER}" | tr '.' '_')"
+/bin/bash -c '(  make start )'
 ```
 
-Keep it running with a process manager like [pm2](https://pm2.io/) and have fun!
+## License
 
-## How the script works
+This project was heavily inspired by [Guillaume REYGNER]'s Twitter Header Bot,
+available from its standalone repository:  
+[github.com/guillaume-rygn/Twitter-header-bot](https://github.com/guillaume-rygn/Twitter-header-bot)
 
-[French Tutorial here](https://hot-jujube-90c.notion.site/Twitter-Bot-Header-eef6c49eee4c4762bca9e4a50aefd91e). 
+MIT License
 
-The script fetches new replies every 60 seconds (to avoid [rate limit](https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/follow-search-get-users/api-reference/get-users-show)).
-
-## Most importantly
-
-Follow me on Twitter! [@guillaume_rygn](https://twitter.com/guillaume_rygn)
-
-Thanks!
+See LICENSE.md.
