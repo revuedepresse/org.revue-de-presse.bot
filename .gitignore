@@ -3,4 +3,3 @@
 .pm2-installed
 docker-compose.override.yaml
 node_modules
-var*
