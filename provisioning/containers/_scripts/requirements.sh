@@ -115,10 +115,6 @@ function install_process_manager() {
         echo '. ${ASDF_DIR}/completions/asdf.bash'  >> "${HOME}/.bashrc"
         echo 'nodejs 18.7.0'                        >> "${HOME}/.tool-versions"
 
-        echo \cat "${HOME}/.bashrc"
-        \cat "${HOME}/.bashrc"
-        echo
-
         source "${HOME}/.bashrc"
         source "${ASDF_DIR}/asdf.sh"
 
@@ -129,6 +125,7 @@ function install_process_manager() {
         # [npm Config Setting](https://docs.npmjs.com/cli/v8/using-npm/config#cache)
         npm config set cache "${_asdf_dir}/../npm" --location=global
         npm install pm2
+
         ./node_modules/.bin/pm2 install pm2-logrotate
 
     fi

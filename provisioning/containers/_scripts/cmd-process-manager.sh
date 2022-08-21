@@ -11,7 +11,9 @@ start() {
 
     if [ ! -d "${project_dir}/.git" ];
     then
+
         rm --recursive --force --verbose "${project_dir}/.git"
+
     fi
 
     if [ ! -e ./.pm2-installed ];
@@ -29,7 +31,7 @@ start() {
 
         ./../node_modules/.bin/pm2 \
             --instances 1 \
-            --log "./../var/log/${WORKER}.json" \
+            --log "${project_dir}/var/log/${WORKER}.json" \
             --log-type json \
             --max-memory-restart 268435456 \
             --no-daemon \
