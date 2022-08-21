@@ -52,7 +52,7 @@ COMPOSE_PROJECT_NAME="$(echo "${WORKER}" | tr '.' '_')"
 
 ## License
 
-This project was heavily inspired by [Guillaume REYGNER]'s Twitter Header Bot,
+This project was heavily inspired by [Guillaume REYGNER]'s Twitter Header Bot,  
 available from its standalone repository:  
 [github.com/guillaume-rygn/Twitter-header-bot](https://github.com/guillaume-rygn/Twitter-header-bot)
 
