@@ -127,6 +127,8 @@ async function get_followers() {
         if (count === arr.length) resolve();
       }).catch((e) => {
         console.error({"processing_avatar": e})
+
+        reject(e)
       });
     });
   });
