@@ -127,16 +127,7 @@ function install() {
         up \
         --detach \
         --force-recreate \
-        app
-
-    docker compose \
-        -f ./provisioning/containers/docker-compose.yaml \
-        -f ./provisioning/containers/docker-compose.override.yaml \
-        exec \
-        --env WORKER="${WORKER}" \
-        --user root \
-        -T app \
-        /bin/bash -c 'source /scripts/install-app-requirements.sh'
+        worker
 
     clean ''
 }
