@@ -125,7 +125,7 @@ async function get_followers() {
         image_data.push(follower_avatar);
         count++;
         if (count === arr.length) resolve();
-      }).catch(e => throw e);
+      }).catch(e => { throw e; })
     });
   });
 
