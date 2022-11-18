@@ -185,42 +185,6 @@ function _capture_dated_website_screenshots_collection() {
 }
 alias capture-dated-website-screenshots-collection='_capture_dated_website_screenshots_collection'
 
-function _capture_dated_website_screenshots_since() {
-    local since_date
-    since_date="${1}"
-
-    if [ -z "${since_date}" ]; then
-
-        since_date="$(date -I)"
-
-    fi
-
-    while [ "$since_date" != "$(date -I)" ]; do
-
-        echo DATE="${since_date}" make capture-dated-website-screenshots-collection
-
-        for _ in $(seq 1 3); do
-
-            DATE="${since_date}" make capture-dated-website-screenshots-collection
-
-            if [ $? -eq 0 ]; then
-
-                break
-
-            else
-
-                printf 'Retrying to capture date website screenshot (on the %s).%s' "${since_date}" $'\n' 1>&2
-
-            fi
-
-        done
-
-        since_date=$(date -I -d "$since_date + 1 day")
-
-    done
-}
-alias capture-dated-website-screenshots-since='_capture_dated_website_screenshots_since'
-
 function _url() {
     local start_selector
     start_selector="${1}"
@@ -354,8 +318,8 @@ function tweet() {
 
     while true; do
 
-        if [ -e "${media_filepath_prefix}1.${media_extension}" ] ||
-            [ -e "${media_filepath_prefix}2.${media_extension}" ] ||
+        if [ -e "${media_filepath_prefix}1.${media_extension}" ] &&
+            [ -e "${media_filepath_prefix}2.${media_extension}" ] &&
             [ -e "${media_filepath_prefix}3.${media_extension}" ]; then
 
             break
@@ -458,7 +422,7 @@ alias post-tweet='tweet'
 
 #```shell
 # export REVUE_AUTH_TOKEN='_tok_'
-# post-issue "$(date -I)"
+# prepublish-newsletter "$(date -I)"
 #```
 function prepublish_newsletter() {
     local dry_mode
@@ -560,8 +524,8 @@ function prepublish_newsletter() {
 
     while true; do
 
-        if [ -e "${media_filepath_prefix}1.${media_extension}" ] ||
-            [ -e "${media_filepath_prefix}2.${media_extension}" ] ||
+        if [ -e "${media_filepath_prefix}1.${media_extension}" ] &&
+            [ -e "${media_filepath_prefix}2.${media_extension}" ] &&
             [ -e "${media_filepath_prefix}3.${media_extension}" ]; then
 
             break
