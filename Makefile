@@ -23,7 +23,7 @@ install-javascript-runtime: install-package-manager ## Install JavaScript runtim
 	@bash -c '. ./tweet.sh && install_javascript_runtime_nodejs' 2>&1 | tee --append ./var/log/installing-javascript-runtime.log
 
 install-jq: ## Install jq
-	@apt install jq --assume-yes
+	@apt install jq --assume-yes || sudo apt install jq --assume-yes
 
 install-ruby-runtime: install-package-manager ## Install Ruby runtime
 	@bash -c '. ./tweet.sh && install_ruby_runtime' 2>&1 | tee --append ./var/log/installing-ruby-runtime.log
@@ -38,6 +38,9 @@ install-website-capture-cli: install-javascript-runtime install-web-browser  ## 
 	@bash -c '. ./tweet.sh && install_website_screenshot_capture_cli' 2>&1 | tee --append ./var/log/installing-website-screenshot-capture-cli-runtime.log
 
 install: install-jq install-twitter-client install-website-capture-cli ## Install dependencies
+
+newsletter: ## Add items to a newsletter via getrevue.co API e.g. REVUE_AUTH_TOKEN='co.getrevue.token' AUTH_TOKEN='org_example_api.token' make newsletter 
+	@bash -c '. ./tweet.sh && prepublish_newsletter '"${DATE}" | tee --append ./var/log/publishing.log
 
 tweet: ## Post a tweet via Twitter API e.g. AUTH_TOKEN='org_example_api.token' make tweet
 	@bash -c '. ./tweet.sh && tweet '"${DATE}" | tee --append ./var/log/tweeting.log
