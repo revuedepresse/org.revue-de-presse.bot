@@ -94,6 +94,14 @@ function _capture_dated_website_screenshot() {
 
     fi
 
+    if [ -e "${output}" ]; then
+
+        printf '%s exists already.%s' "${output}" $'\n'
+
+        return
+
+    fi
+
     local element_selector
     element_selector="${2}"
 
