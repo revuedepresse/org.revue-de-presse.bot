@@ -137,7 +137,7 @@ function _capture_dated_website_screenshot() {
         --full-page \
         --output="${output}" \
         --overwrite \
-        --scale-factor='0.75' \
+        --scale-factor='1' \
         --element="${element_selector}" \
         --wait-for-element="${awaited_element_selector}" \
         --no-block-ads
