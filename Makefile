@@ -23,7 +23,7 @@ install-javascript-runtime: install-package-manager ## Install JavaScript runtim
 	@bash -c '. ./tweet.sh && install_javascript_runtime_nodejs' 2>&1 | tee --append ./var/log/installing-javascript-runtime.log
 
 install-jq: ## Install jq
-	@apt install jq --assume-yes
+	@apt install jq --assume-yes || sudo apt install jq --assume-yes
 
 install-ruby-runtime: install-package-manager ## Install Ruby runtime
 	@bash -c '. ./tweet.sh && install_ruby_runtime' 2>&1 | tee --append ./var/log/installing-ruby-runtime.log
