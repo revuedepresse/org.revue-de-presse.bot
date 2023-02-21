@@ -37,7 +37,7 @@ function export_raw_documents() {
 
     for cmd in $(find screenshots |
         \grep -E 'screenshots\/[0-9][0-9][0-9][0-9]\/[0-9][0-9]\/[0-9][0-9]$' |
-        sed -E 's#screenshots\/(.+)#curl -XGET --silent -H '"'"'x-auth-token: '"${auth_token}""'"' --output "./raw-documents/\1/placeholder.json" '"'""${endpoint}""'"'#g'); do
+        sed -E 's#screenshots\/(.+)#mkdir --parents ./raw-documents/\1 ;curl -XGET --silent -H '"'"'x-auth-token: '"${auth_token}""'"' --output "./raw-documents/\1/placeholder.json" '"'""${endpoint}""'"'#g'); do
 
         if [ -z "${dry_mode_enabled}" ]; then
 
@@ -55,5 +55,18 @@ function export_raw_documents() {
     done
 }
 alias export-raw-documents='export_raw_documents'
+
+function commit_raw_documents() {
+    local year
+    year="$(date -d now '+%Y')"
+
+    if [ -n "${1}" ]; then
+        year="${1}"
+    fi
+
+    find ./raw-documents -regex './raw-documents/'"${year}"'.*json$' \
+        -exec sh -c 'export at_date="$(echo $1 | sed -E "s#placeholder##g" | sed -E "s#.\/raw-documents\/([^\/]+\/[^\/]+\/[^\/]+)\/#\1#g" | sed -E "s#/#-#g" | sed -E "s#.json##")" && mkdir --parents ./raw-documents/"$(echo $at_date | sed -E "s#-#/#")" && export filename=./raw-documents/"$(echo $at_date | sed -E "s#-#/#")"/${at_date}.json && mv --verbose $1 $filename && git add -f $filename && git commit -m "Added a JSON document containing the 10 most retweeted news on the ${at_date}" ' shell {} \;
+}
+alias commit-raw-documents='commit_raw_documents'
 
 set +Eeuo pipefail
