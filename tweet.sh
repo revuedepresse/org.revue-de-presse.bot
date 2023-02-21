@@ -139,7 +139,7 @@ function _capture_dated_website_screenshot() {
     source "${HOME}/.asdf/asdf.sh"
 
     capture-website \
-        'https://revue-de-presse.org/'"${date}"/'?naked' \
+        'https://revue-de-presse.org/'"${date}"'?naked' \
         --delay=20 \
         --emulate-device="${device}" \
         --full-page \
