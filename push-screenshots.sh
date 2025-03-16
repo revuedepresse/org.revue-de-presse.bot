@@ -37,14 +37,13 @@ function push_screenshots() {
 
         directory=$(echo -n ${since_date} | sed -E 's#-#/#g')
 
-        if [ -n "${dry_mode}" ]; then
-        if [ "${is_dry_mode_enabled}" = '--dry-mode' ]; then
+        if [ -n "${is_dry_mode_enabled}" ]; then
 
             echo 'Running in dry mode' 1>&2
 
             echo mkdir --parents screenshots/$directory
             echo mv "screenshots/"*"${since_date}"* screenshots/$directory
-            #echo mv "screenshots/"*"${since_date}"* screenshots/$directory
+
             echo git add screenshots/$directory
             echo gci 'Added the three news most retweeted on the '"${since_date}"
             echo git push origin
@@ -53,7 +52,6 @@ function push_screenshots() {
 
             echo mkdir --parents screenshots/$directory
             mkdir --parents screenshots/$directory
-            #[ -d screenshots/$directory ] || mv --force "screenshots/"*"${since_date}"* screenshots/$directory
 
             echo git add -f screenshots/$directory
             git add -f screenshots/$directory
