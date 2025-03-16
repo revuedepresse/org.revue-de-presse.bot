@@ -25,18 +25,30 @@ function install_ruby_runtime() {
 }
 alias install-ruby-runtime='install_ruby_runtime'
 
-function install_javascript_runtime_nodejs() {
-    source "${HOME}/.asdf/asdf.sh"
+function source_asdf() {
+    if command asdf --version >/dev/null 2>&1;
+    then
+        return 0
+    else
+        source "${HOME}/.asdf/asdf.sh"
+    fi
+}
 
-    asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
-    asdf install nodejs 18.12.1
-    asdf local nodejs 18.12.1
-    asdf global nodejs 18.12.1
+function install_javascript_runtime_nodejs() {
+    source_asdf
+
+    if [ $(uname -v) != 'Darwin' ];
+    then
+        asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+        asdf install nodejs 18.12.1
+        asdf local nodejs 18.12.1
+        asdf global nodejs 18.12.1
+    fi
 }
 alias install-javascript-runtime='install_javascript_runtime_nodejs'
 
 function install_twitter_client_twurl() {
-    source "${HOME}/.asdf/asdf.sh"
+    source_asdf
 
     if ! command -v gem >>/dev/null 2>&1; then
 
@@ -52,7 +64,7 @@ function install_twitter_client_twurl() {
 alias install-twitter-client='install_twitter_client_twurl'
 
 function install_website_screenshot_capture_cli() {
-    source "${HOME}/.asdf/asdf.sh"
+    source_asdf
 
     if ! command -v npm >>/dev/null 2>&1; then
 
@@ -74,11 +86,22 @@ function install_web_browser() {
 
         return 0
 
+    else
+
+        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+        apt install ./google-chrome-stable_current_amd64.deb
+        rm -f google-chrome-stable_current_amd64.deb
+
     fi
 
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    apt install ./google-chrome-stable_current_amd64.deb
-    rm -f google-chrome-stable_current_amd64.deb
+    if [ $(uname -s) = 'Darwin' ] && [ -e /Applications/Google\ Chrome.app ];
+    then
+
+        printf 'Skipping web browser ("%s") installation (macOS is not supported).%s' 'chrome' $'\n' 1>&2
+
+        return 0
+
+    fi
 }
 alias install-web-browser='install_web_browser'
 
@@ -136,7 +159,7 @@ function _capture_dated_website_screenshot() {
     local device
     device="Pixel 2 XL"
 
-    source "${HOME}/.asdf/asdf.sh"
+    source_asdf
 
     capture-website \
         'https://revue-de-presse.org/'"${date}"'?naked' \
@@ -280,7 +303,7 @@ alias text='_text'
 # post-tweet "$(date -I)"
 #```
 function tweet() {
-    source "${HOME}/.asdf/asdf.sh"
+    source_asdf
 
     if ! command -v twurl >>/dev/null 2>&1; then
 
@@ -489,7 +512,7 @@ function prepublish_newsletter() {
 
     fi
 
-    source "${HOME}/.asdf/asdf.sh"
+    source_asdf
 
     local date
     date="${1}"
