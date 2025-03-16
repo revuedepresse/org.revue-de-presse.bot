@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
+source "${HOME}/.running/distributed-version-control-system-git.sh"
+
 #
 # Push screenshots to remote directory
 #
@@ -23,6 +25,7 @@ function push_screenshots() {
     dry_mode="${2}"
 
     local is_dry_mode_enabled
+    is_dry_mode_enabled=''
 
     if [ -n "${dry_mode}" ]; then
 
@@ -35,19 +38,28 @@ function push_screenshots() {
         directory=$(echo -n ${since_date} | sed -E 's#-#/#g')
 
         if [ -n "${dry_mode}" ]; then
+        if [ "${is_dry_mode_enabled}" = '--dry-mode' ]; then
+
+            echo 'Running in dry mode' 1>&2
 
             echo mkdir --parents screenshots/$directory
             echo mv "screenshots/"*"${since_date}"* screenshots/$directory
+            #echo mv "screenshots/"*"${since_date}"* screenshots/$directory
             echo git add screenshots/$directory
             echo gci 'Added the three news most retweeted on the '"${since_date}"
             echo git push origin
 
         else
 
+            echo mkdir --parents screenshots/$directory
             mkdir --parents screenshots/$directory
-            mv "screenshots/"*"${since_date}"* screenshots/$directory
-            git add screenshots/$directory
-            gci 'Added the three news most retweeted on the '"${since_date}"
+            #[ -d screenshots/$directory ] || mv --force "screenshots/"*"${since_date}"* screenshots/$directory
+
+            echo git add -f screenshots/$directory
+            git add -f screenshots/$directory
+
+            echo git_commit 'Added the three news most retweeted on the '"${since_date}"
+            git_commit 'Added the three news most retweeted on the '"${since_date}"
             git push origin
 
         fi
